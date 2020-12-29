@@ -1,6 +1,16 @@
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+
+//First line allows you to compare the first three elements of an array to determine the commonalities
+ int sum = Arrays.stream(integers).limit(3).map(i -> Math.abs(i) % 2).sum();
+        int mod = (sum == 0 || sum == 1) ? 1 : 0;
+
+  //Parallel call here for filtering of a single odd one out element
+        return Arrays.stream(integers).parallel() // call parallel to get as much bang for the buck on a "large" array
+                .filter(n -> Math.abs(n) % 2 == mod).findFirst().getAsInt();
+    }
+
 //use regex to identify valid strings with a variable length and multiple valid characters at each index
   public static int countSmileys(List<String> arr) {
       return (int) arr.stream()
