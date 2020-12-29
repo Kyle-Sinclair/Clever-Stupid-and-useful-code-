@@ -1,6 +1,13 @@
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+//use regex to identify valid strings with a variable length and multiple valid characters at each index
+  public static int countSmileys(List<String> arr) {
+      return (int) arr.stream()
+        .filter(e -> e.matches("[:;][-~]?[\\)D]"))
+        .count();
+  }
+
 //Take an array of strings and manipulate individual characters using substrings
 return Arrays.stream(phrase.split(" "))
                    .map(i -> i.substring(0, 1).toUpperCase() + i.substring(1, i.length()))
