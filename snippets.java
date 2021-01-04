@@ -1,6 +1,14 @@
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+//remember for values within a reasonable number
+//using an array and icnrementing each index can be a way to count each number
+
+ for(int d:dice){
+      rolls[d]++;
+    }
+    return rolls[1]/3 * 1000 + rolls[1]%3 * 100 + rolls[2]/3 * 200 + rolls[3]/3 * 300 + rolls[4]/3 * 400 + rolls[5]/3 * 500+rolls[5]%3 * 50 + rolls[6]/3 * 600;
+    
 
 //code to split a long string around a huge number of variables, remove a set of variables, then ensure each has more than apostrophes in it
  Map<String, Long> map = Arrays.stream(s.split("\\p{javaWhitespace}+|[\\p{P}&&[^\u0027]]"))
