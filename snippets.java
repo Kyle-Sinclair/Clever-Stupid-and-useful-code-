@@ -2,6 +2,22 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 
+//code to split a long string around a huge number of variables, remove a set of variables, then ensure each has more than apostrophes in it
+ Map<String, Long> map = Arrays.stream(s.split("\\p{javaWhitespace}+|[\\p{P}&&[^\u0027]]"))
+        .map(str -> str.replaceAll("[\\n\\s+\\p{P}&&[^\u0027]]","").toLowerCase())
+        .filter(str -> str.length() > 0)
+        .filter(str -> !str.matches("(')+"))
+        .collect(Collectors.groupingBy(w -> w, Collectors.counting()));
+    
+
+//sort a result of map entries by set and limit the number returned
+    List<String> result = map.entrySet().stream()
+        .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+        .limit(3)
+        .map(e -> e.getKey())
+        .collect(Collectors.toList());
+
+
 //First line allows you to compare the first three elements of an array to determine the commonalities
  int sum = Arrays.stream(integers).limit(3).map(i -> Math.abs(i) % 2).sum();
         int mod = (sum == 0 || sum == 1) ? 1 : 0;
