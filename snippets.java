@@ -1,5 +1,44 @@
-import java.util.Arrays;
-import java.util.stream.Collectors;
+//code that walks through entries of a conversion table
+    private static final Map<Integer, String> CONVERSIONS;
+    static {
+        TreeMap<Integer, String> map = new TreeMap<>();
+        map.put(1000, "M");
+        map.put(900, "CM");
+        map.put(500, "D");
+        map.put(400, "CD");
+        map.put(100, "C");
+        map.put(90, "XC");
+        map.put(50, "L");
+        map.put(40, "XL");
+        map.put(10, "X");
+        map.put(9, "IX");
+        map.put(5, "V");
+        map.put(4, "IV");
+        map.put(1, "I");
+        CONVERSIONS = Collections.unmodifiableMap(map.descendingMap());
+    }
+
+    public static String toRoman(int n) {
+        StringBuilder result = new StringBuilder();
+        for (Map.Entry<Integer, String> entry : CONVERSIONS.entrySet()) {
+            while (n >= entry.getKey()) {
+                result.append(entry.getValue());
+                n -= entry.getKey();
+            }
+        }
+        return result.toString();
+    }
+
+public static int fromRoman(String romanNumeral) {
+        int result = 0;
+        for (Map.Entry<Integer, String> entry : CONVERSIONS.entrySet()) {
+            while (romanNumeral.startsWith(entry.getValue())) {
+                result += entry.getKey();
+                romanNumeral = romanNumeral.substring(entry.getValue().length());
+            }
+        }
+        return result;
+    }
 
 //remember for values within a reasonable number
 //using an array and icnrementing each index can be a way to count each number
