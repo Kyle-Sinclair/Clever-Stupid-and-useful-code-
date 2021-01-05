@@ -18,6 +18,38 @@
         CONVERSIONS = Collections.unmodifiableMap(map.descendingMap());
     }
 
+//Code that uses regular expression to comb strings to make algebraic expansions. Good example of 
+//java matchers
+public static String expand(String expr) {
+
+    String[] spliter = expr.split("\\^");
+
+    String polynomial = spliter[0].substring(1, spliter[0].length() - 1);
+
+    if (Integer.valueOf(spliter[1]) == 0)
+      return "1";
+    if (Integer.valueOf(spliter[1]) == 1)
+      return polynomial;
+
+    int n = Integer.valueOf(spliter[1]);
+
+    Pattern p1 = Pattern.compile("\\-*[0-9]*[a-z]{1}");
+    Pattern p2 = Pattern.compile("\\b\\-*[0-9]+\\b");
+
+    Matcher m1 = p1.matcher(polynomial);
+    Matcher m2 = p2.matcher(polynomial);
+
+    m1.find();
+    int a = Integer.valueOf(m1.group().substring(0, m1.group().length() - 1).equals("") ? "1"
+        : m1.group().substring(0, m1.group().length() - 1).equals("-") ? "-1"
+            : m1.group().substring(0, m1.group().length() - 1));
+    String s = m1.group().substring(m1.group().length() - 1);
+    m2.find();
+    int b = Integer.valueOf(m2.group());
+    if (b == 0) {
+      return (long) Math.pow(a, n) + s + "^" + n;
+    }
+
     public static String toRoman(int n) {
         StringBuilder result = new StringBuilder();
         for (Map.Entry<Integer, String> entry : CONVERSIONS.entrySet()) {
