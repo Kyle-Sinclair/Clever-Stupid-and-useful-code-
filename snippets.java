@@ -18,6 +18,35 @@
         CONVERSIONS = Collections.unmodifiableMap(map.descendingMap());
     }
 
+//depth first search on a character board
+//don't understand this one but it's tedious to work out so just keep it
+    public boolean check() {                                                          // Do a DFS for each char corresponding to the first letter of the word
+        for (int x=0 ; x < board.length ; x++) 
+            for (int y=0 ; y < board[x].length ; y++)
+                if (word.charAt(0) == board[x][y]) {
+                    boolean isPresent = dfsCheck(1, new Point(x,y));
+                    if (isPresent) return true;
+                }
+        return false;
+    }
+    
+    
+    private boolean dfsCheck(final int iC, final Point p) {
+        if (iC == word.length()) return true;                                          // Found a full match
+        
+        char wasC = board[p.x][p.y];                                                   // Archive current cahr under the "pointer"
+        board[p.x][p.y] = '\0';                                                        // consume
+        boolean isPresent = Arrays.stream(MOVES)
+                                  .map( m -> new Point(m.x+p.x, m.y+p.y) )
+                                  .filter( m -> 0 <= m.x && m.x < board.length
+                                             && 0 <= m.y && m.y < board.length 
+                                             && board[m.x][m.y] == word.charAt(iC) )
+                                  .anyMatch( m ->  dfsCheck(iC+1, m) );                // Search for next char at all positions around the current one
+        board[p.x][p.y] = wasC;                                                        // "unconsume" the current char
+        return isPresent;
+    }
+}
+
 //Code that uses regular expression to comb strings to make algebraic expansions. Good example of 
 //java matchers' groups
 public static String expand(String expr) {
