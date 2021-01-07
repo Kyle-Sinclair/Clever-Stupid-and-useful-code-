@@ -1,3 +1,11 @@
+//A way to represent mathematical operations as enums that let's you compare precendence
+private enum Operator
+    {
+        ADD(1), SUBTRACT(2), MULTIPLY(3), DIVIDE(4);
+        final int precedence;
+        Operator(int p) { precedence = p; }
+    }
+
 //code that walks through entries of a conversion table
     private static final Map<Integer, String> CONVERSIONS;
     static {
